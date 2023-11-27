@@ -1,1 +1,3 @@
 venv_drakes_api
+.idea/
+__pycache__/
