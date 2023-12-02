@@ -2,18 +2,25 @@ from pymongo import MongoClient
 
 MONGO_URI = "mongodb+srv://user2:x7s1uNrJePt7ZvCq@cluster1.rdtlrgq.mongodb.net/?retryWrites=true&w=majority"
 
-new_accounts = [
+new_lookbook = [
     {
-        "account_id": "MDB011235813",
-        "account_holder": "Ada Lovelace",
-        "account_type": "checking",
-        "balance": 60218,
-    },
-    {
-        "account_id": "MDB829000001",
-        "account_holder": "Muhammad ibn Musa al-Khwarizmi",
-        "account_type": "savings",
-        "balance": 267914296,
+        "lookbook_name": "spring-summer-2017-lookbook",
+        "tags": ["spring-summer", "2017", "casual", "menswear"],
+        "images": [
+            "/images/spring-summer-2017-lookbook/image_22.jpg",
+            "/images/spring-summer-2017-lookbook/image_21.jpg",
+            "/images/spring-summer-2017-lookbook/image_20.jpg",
+            "/images/spring-summer-2017-lookbook/image_19.jpg",
+            "/images/spring-summer-2017-lookbook/image_18.jpg",
+            "/images/spring-summer-2017-lookbook/image_17.jpg",
+            "/images/spring-summer-2017-lookbook/image_11.jpg",
+            "/images/spring-summer-2017-lookbook/image_10.jpg",
+            "/images/spring-summer-2017-lookbook/image_9.jpg",
+            "/images/spring-summer-2017-lookbook/image_8.jpg",
+            "/images/spring-summer-2017-lookbook/image_7.jpg",
+            "/images/spring-summer-2017-lookbook/image_3.jpg",
+            "/images/spring-summer-2017-lookbook/image_1.jpg"
+        ]
     },
 ]
 
@@ -25,9 +32,9 @@ try:
     print("Connected to MongoDB. Database names:")
     for db_name in database_names:
         print(db_name)
-    db = client.bank
-    accounts_collection = db.accounts
-    result = accounts_collection.insert_many(new_accounts)
+    db = client.drakes_lookbooks
+    lookbooks_collection = db.lookbooks
+    result = lookbooks_collection.insert_many(new_lookbook)
 
     document_ids = result.inserted_ids
     print("# of documents inserted: " + str(len(document_ids)))
