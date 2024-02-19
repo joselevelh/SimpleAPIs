@@ -1,7 +1,5 @@
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 from models import Lookbook
-import pydantic
 
 # MongoDB Setup
 MONGO_URI = "mongodb+srv://user2:x7s1uNrJePt7ZvCq@cluster1.rdtlrgq.mongodb.net/?retryWrites=true&w=majority"
@@ -24,7 +22,13 @@ def check_db_connection():
     return check == 3
 
 
-def retrieve_lookbook_by_name(name: str) -> Lookbook:
+def retrieve_lookbook_by_tag(tags: list[str]) -> list[Lookbook]:
+    query = {"tags": {"$in": tags}}  # $in does partial matching in mongo array
+    matching_lookbooks = lookbooks_collection.find(query)
+    return matching_lookbooks
+
+
+def retrieve_lookbook_by_name(name: str) -> list[Lookbook]:
     search_ex = {"lookbook_name": name}
     print(f"Search expression: {search_ex}")
     result = lookbooks_collection.find_one(search_ex)

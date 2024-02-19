@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from typing import List
+
+from fastapi import FastAPI, Query
 # from models import FilterParams, Image, Lookbook
 from models import FilterParams, Lookbook
 import crud
@@ -15,25 +17,25 @@ async def system_check():
 
 
 @app.get("/lookbooks/{title}")
-async def get_lookbook(title: str) -> Lookbook:
+async def get_lookbook(title: str) -> list[Lookbook]:
     print(f"Searching for {title} in lookbooks db...")
     lookbook = crud.retrieve_lookbook_by_name(name=title)
     print(f"{lookbook =}")
     return lookbook
 
 
+@app.get("/lookbooks/any/")
+async def get_lookbooks_any(tags: list[str] = Query(default=None)) -> list[Lookbook]:
+    """Returns all lookbooks that have the given tag(s)"""
+    print(f"Searching for {tags} in lookbooks db...")
+    lookbooks = crud.retrieve_lookbook_by_tag(tags=tags)
+    print(f"{lookbooks =}")
+    return lookbooks
+
 
 @app.get("/lookbooks/all")
-async def get_or_filtered_lookbooks(filter_params: FilterParams):
+async def get_lookbooks_all(filter_params: FilterParams):
     """Returns lookbooks that match ALL the tags given"""
-    # Use 'filter_params.tags' to filter lookbooks
-    # ...
-    return None
-
-
-@app.get("/lookbooks/any")
-async def get_and_filtered_lookbooks(filter_params: FilterParams):
-    """Returns lookbooks that math ANY of the tags given"""
     # Use 'filter_params.tags' to filter lookbooks
     # ...
     return None
