@@ -17,7 +17,7 @@ async def system_check():
 
 
 @app.get("/lookbooks/{title}")
-async def get_lookbook(title: str) -> list[Lookbook]:
+async def get_lookbook(title: str) -> Lookbook:
     print(f"Searching for {title} in lookbooks db...")
     lookbook = crud.retrieve_lookbook_by_name(name=title)
     print(f"{lookbook =}")

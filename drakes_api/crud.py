@@ -28,7 +28,7 @@ def retrieve_lookbook_by_tag(tags: list[str]) -> list[Lookbook]:
     return matching_lookbooks
 
 
-def retrieve_lookbook_by_name(name: str) -> list[Lookbook]:
+def retrieve_lookbook_by_name(name: str) -> Lookbook:
     search_ex = {"lookbook_name": name}
     print(f"Search expression: {search_ex}")
     result = lookbooks_collection.find_one(search_ex)
