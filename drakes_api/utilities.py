@@ -15,7 +15,7 @@ def renew_index():
         db = client.drakes_lookbooks
         lookbooks_collection = db.lookbooks
         lookbooks_collection.create_index([('lookbook_name', 'text')])
-        # lookbooks_collection.
+        print(lookbooks_collection.index_information())
         client.close()
     except Exception as e:
         print(f"Error connecting to MongoDB: {e}")

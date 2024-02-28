@@ -22,8 +22,6 @@ def check_db_connection():
     return check == 3
 
 
-
-
 def retrieve_lookbook_by_tag(tags: list[str]) -> list[Lookbook]:
     query = {"tags": {"$in": tags}}  # $in does partial matching in mongo array
     matching_lookbooks = lookbooks_collection.find(query)
@@ -31,9 +29,6 @@ def retrieve_lookbook_by_tag(tags: list[str]) -> list[Lookbook]:
 
 
 def retrieve_lookbook_by_name(name: str) -> list[Lookbook]:
-    query = {"$text": {"$search": name}, "$limit": 10}
-    print(f"{query= }")
-    result: list[Lookbook] = lookbooks_collection.find(query)
-    for lookbook in result:
-        print(f"{lookbook= }")
+    query = {"$text": {"$search": name}}
+    result: list[Lookbook] = lookbooks_collection.find(query).limit(15)
     return result
