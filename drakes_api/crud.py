@@ -22,15 +22,18 @@ def check_db_connection():
     return check == 3
 
 
+
+
 def retrieve_lookbook_by_tag(tags: list[str]) -> list[Lookbook]:
     query = {"tags": {"$in": tags}}  # $in does partial matching in mongo array
     matching_lookbooks = lookbooks_collection.find(query)
     return matching_lookbooks
 
 
-def retrieve_lookbook_by_name(name: str) -> Lookbook:
-    search_ex = {"lookbook_name": name}
-    print(f"Search expression: {search_ex}")
-    result = lookbooks_collection.find_one(search_ex)
-    print(f"Lookbook: {result}")
+def retrieve_lookbook_by_name(name: str) -> list[Lookbook]:
+    query = {"$text": {"$search": name}, "$limit": 10}
+    print(f"{query= }")
+    result: list[Lookbook] = lookbooks_collection.find(query)
+    for lookbook in result:
+        print(f"{lookbook= }")
     return result

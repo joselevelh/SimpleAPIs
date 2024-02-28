@@ -7,7 +7,7 @@ class FilterParams(BaseModel):
     tags: List[str]
 
 
-# Temporaily unused (need to add infra to mongodb)
+# Temporarily unused (need to add infra to mongodb)
 # class Image(BaseModel):
 #     filename: str
 #     path: str
