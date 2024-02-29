@@ -15,8 +15,8 @@ def renew_index():
         print(f"Error connecting to MongoDB: {e}")
 
 
-def update_lookbook_tags(lookbook_name: str, tags_to_add: list[str], replace: bool = False):
-    """Updates tag of document, returns True if there is any change in the tag field after operation"""
+def update_lookbook_tags(lookbook_name: str, tags_to_add: list[str], replace=False):
+    """Updates tag of document, returns True if successful"""
     if replace:
         existing_tags = db.lookbooks.find_one({"lookbook_name": lookbook_name}).get('tags')
         db.lookbooks.update_one(
@@ -41,7 +41,7 @@ def update_lookbook_tags(lookbook_name: str, tags_to_add: list[str], replace: bo
         )
         new_tags: list[str] = db.lookbooks.find_one({"lookbook_name": lookbook_name}).get('tags')
         print(f"\t new tags: {new_tags}")
-        return new_tags != existing_tags
+        return new_tags == updated_tags
 
 
 if __name__ == "__main__":
