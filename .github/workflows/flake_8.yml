@@ -14,10 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python
+      - name: Install Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9.1'
+          python-version: '3.9.1'  # Adjust Python version as needed
 
       - name: Install dependencies
         run: |
