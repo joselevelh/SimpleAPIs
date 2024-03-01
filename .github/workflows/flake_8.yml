@@ -25,12 +25,13 @@ jobs:
           pip install flake8
 
       - name: Run Flake8
+        id: flake_8
         run: |
           flake8
         continue-on-error: true
 
       - name: Comment on PR
-        if: ${{ steps.flake8.outcome == 'failure'}}
+        if: ${{ steps.flake_8.outcome == 'failure'}}
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
