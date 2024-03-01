@@ -32,14 +32,24 @@ jobs:
 
       - name: Comment on PR
         if: ${{ steps.flake_8.outcome == 'failure'}}
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `Flake8 found issues in your code. Please fix them.\n\n\`${{ steps.flake8.outputs.stdout }}\``;
-            github.issues.createComment({
+            const output = `Flake8 found issues in your code. Please fix them.\n\n\`${{ steps.flake_8.outputs.stdout }}\``;
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: output
-            });
+            })
+        # uses: actions/github-script@v4
+        # with:
+        #   github-token: ${{ secrets.GITHUB_TOKEN }}
+        #   script: |
+        #     const output = `Flake8 found issues in your code. Please fix them.\n\n\`${{ steps.flake8.outputs.stdout }}\``;
+        #     github.issues.createComment({
+        #       issue_number: context.issue.number,
+        #       owner: context.repo.owner,
+        #       repo: context.repo.repo,
+        #       body: output
+        #     });
