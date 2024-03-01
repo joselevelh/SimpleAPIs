@@ -1,7 +1,5 @@
-from typing import List
-
 from fastapi import FastAPI, Query
-# from models import FilterParams, Image, Lookbook
+
 from models import FilterParams, Lookbook
 import crud
 
