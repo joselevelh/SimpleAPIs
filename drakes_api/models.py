@@ -1,6 +1,5 @@
 from typing import List
-from pydantic import BaseModel, Field, field_validator
-from bson import ObjectId
+from pydantic import BaseModel
 
 
 class FilterParams(BaseModel):
