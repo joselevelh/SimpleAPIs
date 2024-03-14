@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query
 
-from models import FilterParams, Lookbook
+from models import Lookbook
 import crud
 
 
@@ -29,11 +29,3 @@ async def get_lookbooks_any(tags: list[str] = Query(default=None)) -> list[Lookb
     lookbooks = crud.retrieve_lookbook_by_tag(tags=tags)
     print(f"{lookbooks =}")
     return lookbooks
-
-
-@app.get("/lookbooks/all")
-async def get_lookbooks_all(filter_params: FilterParams):
-    """Returns lookbooks that match ALL the tags given"""
-    # Use 'filter_params.tags' to filter lookbooks
-    # ...
-    return None
