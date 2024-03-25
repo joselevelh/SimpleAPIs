@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from models import Lookbook
+from app.models import Lookbook
 import os
 
 # MongoDB Setup
@@ -20,6 +20,9 @@ def check_db_connection():
     if db.lookbooks is not None:
         print(f"Lookbook collection: {db.lookbooks}")
         check += 1
+    # if db.lookbooks.find_one({"lookbook_name": "spring-summer-2017-lookbook"}) is not None:
+    #     print(f'Lookbook = {db.lookbooks.find_one({"lookbook_name": "spring-summer-2017-lookbook"})}')
+    #     check += 1
     return check == 3
 
 
