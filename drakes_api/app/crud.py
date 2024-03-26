@@ -1,8 +1,9 @@
 from pymongo import MongoClient
-from models import Lookbook
+from app.models import Lookbook
+import os
 
 # MongoDB Setup
-MONGO_URI = "mongodb+srv://user2:x7s1uNrJePt7ZvCq@cluster1.rdtlrgq.mongodb.net/?retryWrites=true&w=majority"
+MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(MONGO_URI)
 db = client.drakes_lookbooks
 lookbooks_collection = db.lookbooks
@@ -19,7 +20,10 @@ def check_db_connection():
     if db.lookbooks is not None:
         print(f"Lookbook collection: {db.lookbooks}")
         check += 1
-    return check == 3
+    if db.lookbooks.find_one({"lookbook_name": "spring-summer-2017-lookbook"}) is not None:
+        print(f'Lookbook = {db.lookbooks.find_one({"lookbook_name": "spring-summer-2017-lookbook"})}')
+        check += 1
+    return check == 4
 
 
 def retrieve_lookbook_by_tag(tags: list[str]) -> list[Lookbook]:

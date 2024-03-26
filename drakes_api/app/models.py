@@ -6,17 +6,9 @@ class FilterParams(BaseModel):
     tags: List[str]
 
 
-# Temporarily unused (need to add infra to mongodb)
-# class Image(BaseModel):
-#     filename: str
-#     path: str
-
-
 class Lookbook(BaseModel):
-    # id: str = Field(alias="_id", default=None) # Needs extra config to convert objectID to pydantic supported type
     lookbook_name: str
     tags: List[str]
-    # images: List[Image]
     images: List[str]
 
     class Config:

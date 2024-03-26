@@ -1,9 +1,10 @@
 import os
-from pymongo import MongoClient
+
+from app.crud import client
 
 import typer
 
-MONGO_URI = "mongodb+srv://user2:x7s1uNrJePt7ZvCq@cluster1.rdtlrgq.mongodb.net/?retryWrites=true&w=majority"
+
 app = typer.Typer()
 google_storage_bucket_base = "https://storage.googleapis.com/drakes_lookbooks_bucket/drakes_images/"
 
@@ -26,12 +27,8 @@ def iterate_subdirectories(directory_path: str):
     for root, directories, _ in os.walk(directory_path):
         for lookbook in directories:
             lookbook_path = os.path.join(root, lookbook)
-            # typer.echo(f"Lookbook: {lookbook_path}")
             for _, _, files in os.walk(lookbook_path):
-                # typer.echo(f"lookbook_name: {lookbook}")
-                # typer.echo(f"   tags: []")
                 image_paths = [google_storage_bucket_base + lookbook + "/" + image_name for image_name in files]
-                # typer.echo(f"   images: {image_paths}")
                 new_lookbook = create_lookbook_dict(lookbook_name=lookbook, lookbook_tags=[], image_paths=image_paths)
                 upload_lookbook(new_lookbook)
 
@@ -52,7 +49,7 @@ def upload_lookbook(lookbooks_to_upload: list[dict]):
     """Uploads given lookbook to Google Cloud"""
 
     try:
-        client = MongoClient(MONGO_URI)
+
         # Check the connection by listing database names
         print(f"Client: {client}")
         database_names = client.list_databases()
