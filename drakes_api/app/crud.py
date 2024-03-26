@@ -20,10 +20,10 @@ def check_db_connection():
     if db.lookbooks is not None:
         print(f"Lookbook collection: {db.lookbooks}")
         check += 1
-    # if db.lookbooks.find_one({"lookbook_name": "spring-summer-2017-lookbook"}) is not None:
-    #     print(f'Lookbook = {db.lookbooks.find_one({"lookbook_name": "spring-summer-2017-lookbook"})}')
-    #     check += 1
-    return check == 3
+    if db.lookbooks.find_one({"lookbook_name": "spring-summer-2017-lookbook"}) is not None:
+        print(f'Lookbook = {db.lookbooks.find_one({"lookbook_name": "spring-summer-2017-lookbook"})}')
+        check += 1
+    return check == 4
 
 
 def retrieve_lookbook_by_tag(tags: list[str]) -> list[Lookbook]:

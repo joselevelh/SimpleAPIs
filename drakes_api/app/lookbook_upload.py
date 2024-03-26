@@ -1,9 +1,10 @@
 import os
-from pymongo import MongoClient
+
+from app.crud import client
 
 import typer
 
-MONGO_URI = "mongodb+srv://user2:x7s1uNrJePt7ZvCq@cluster1.rdtlrgq.mongodb.net/?retryWrites=true&w=majority"
+
 app = typer.Typer()
 google_storage_bucket_base = "https://storage.googleapis.com/drakes_lookbooks_bucket/drakes_images/"
 
@@ -48,7 +49,7 @@ def upload_lookbook(lookbooks_to_upload: list[dict]):
     """Uploads given lookbook to Google Cloud"""
 
     try:
-        client = MongoClient(MONGO_URI)
+
         # Check the connection by listing database names
         print(f"Client: {client}")
         database_names = client.list_databases()

@@ -4,6 +4,10 @@ FROM python:3.9
 #
 LABEL authors="JoseLevel"
 
+# Setting env variable via arg to be passed at container run time or build time
+ARG MONGO_URI_ARG
+ENV MONGO_URI=$MONGO_URI_ARG
+
 #
 WORKDIR /drakes_api
 
