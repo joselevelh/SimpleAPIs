@@ -8,6 +8,7 @@ LABEL authors="JoseLevel"
 ARG MONGO_URI_ARG
 ENV MONGO_URI=$MONGO_URI_ARG
 
+RUN echo $MONGO_URI
 #
 WORKDIR /drakes_api
 

@@ -26,3 +26,5 @@ def test_get_lookbooks_any():
                                           "2017",
                                           "casual",
                                           "menswear"]
+
+# TODO: Add tests for empty and invalid lookbooks
