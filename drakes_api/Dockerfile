@@ -22,5 +22,6 @@ RUN pip install --no-cache-dir --upgrade -r /drakes_api/requirements.txt
 #
 COPY ./app /drakes_api/app
 
+ENV HOST 0.0.0.0
 #
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
