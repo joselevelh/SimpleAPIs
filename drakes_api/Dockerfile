@@ -8,7 +8,7 @@ LABEL authors="JoseLevel"
 #ARG MONGO_URI_ARG
 #ENV MONGO_URI=$MONGO_URI_ARG
 #
-##ENV MONGO_URI="mongodb+srv://user2:x7s1uNrJePt7ZvCq@cluster1.rdtlrgq.mongodb.net/?retryWrites=true&w=majority"
+ENV MONGO_URI="mongodb+srv://user2:x7s1uNrJePt7ZvCq@cluster1.rdtlrgq.mongodb.net/?retryWrites=true&w=majority"
 #
 #RUN echo $MONGO_URI
 ##
