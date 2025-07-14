@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Query
+from starlette.middleware.cors import CORSMiddleware
 
 from app.models import Lookbook
 from app import crud
@@ -7,6 +8,16 @@ from app import crud
 app = FastAPI(title="Unofficial Drakes Lookbook API",
               summary="An API to browse Drakes lookbooks", )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        " http://localhost:5173",
+        "https://yourdomain.com",  # Todo: Change this to my front-end domain
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
 
 @app.get("/syscheck")
 def system_check():

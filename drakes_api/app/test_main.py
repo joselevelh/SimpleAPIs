@@ -7,7 +7,7 @@ client = TestClient(app)
 def test_system_check():
     response = client.get("/syscheck")
     assert response.status_code == 200
-    assert response.json() == True
+    assert response.json()
 
 
 def test_get_lookbook():
@@ -22,9 +22,9 @@ def test_get_lookbooks_any():
     assert response.status_code == 200
     assert len(response.json()) >= 1
     assert response.json()[0]["tags"] == [
-                                          "spring-summer",
-                                          "2017",
-                                          "casual",
-                                          "menswear"]
+        "spring-summer",
+        "2017",
+        "casual",
+        "menswear"]
 
 # TODO: Add tests for empty and invalid lookbooks
