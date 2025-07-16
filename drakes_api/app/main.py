@@ -11,7 +11,8 @@ app = FastAPI(title="Unofficial Drakes Lookbook API",
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        " http://localhost:5173",
+        "http://localhost:5173",
+        "http://localhost:5173/",
         "https://yourdomain.com",  # Todo: Change this to my front-end domain
     ],
     allow_credentials=True,
