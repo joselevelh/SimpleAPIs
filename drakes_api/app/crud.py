@@ -1,3 +1,4 @@
+from bson import ObjectId
 from pymongo import MongoClient
 from app.models import Lookbook
 import os
@@ -26,9 +27,11 @@ def check_db_connection():
     return check == 4
 
 
-def retrieve_lookbook_by_tag(tags: list[str]) -> list[Lookbook]:
+def retrieve_lookbook_by_tag(tags: list[str], cursor=None, limit: int = 5) -> list[Lookbook]:
     query = {"tags": {"$in": tags}}  # $in does partial matching in mongo array
-    matching_lookbooks = lookbooks_collection.find(query)
+    if cursor:
+        query["_id"] = {"$gt": ObjectId(cursor)}
+    matching_lookbooks = lookbooks_collection.find(query).sort("_id", 1).limit(limit)
     return matching_lookbooks
 
 
