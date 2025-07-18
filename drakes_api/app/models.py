@@ -28,4 +28,4 @@ class Lookbook(BaseModel):
 class LookbookResponse(BaseModel):
     lookbooks_list: list[Lookbook]
     has_more: bool
-    next_cursor: str | None
+    next_cursor: str
