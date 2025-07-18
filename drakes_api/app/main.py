@@ -27,11 +27,22 @@ def system_check():
 
 
 @app.get("/lookbooks/{title}")
-def get_lookbook(title: str) -> list[Lookbook]:
+def get_lookbook(title: str,
+                 limit: int = 5,
+                 cursor=None) -> LookbookResponse:
     print(f"Searching for {title} in lookbooks db...")
-    lookbooks = crud.retrieve_lookbook_by_name(name=title)
+    lookbooks = crud.retrieve_lookbook_by_name(name=title, cursor=cursor, limit=limit )
     print(f"{lookbooks=}")
-    return lookbooks
+    # Handle empty results
+    next_cursor = ""
+    if lookbooks:  # Only set cursor if we have results
+        next_cursor = lookbooks[-1].id  # The id of the last lb we got
+    lb_response = LookbookResponse(
+        lookbooks_list=lookbooks,
+        next_cursor=next_cursor,
+        has_more=len(lookbooks) == limit  # If we reached limit there might be more
+    )
+    return lb_response
 
 
 @app.get("/lookbooks/any/")

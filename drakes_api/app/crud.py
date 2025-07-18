@@ -40,7 +40,14 @@ def retrieve_lookbook_by_tag(tags: list[str], cursor=None, limit: int = 5) -> li
     return lookbook_list
 
 
-def retrieve_lookbook_by_name(name: str) -> list[Lookbook]:
+def retrieve_lookbook_by_name(name: str, cursor=None, limit: int = 5) -> list[Lookbook]:
     query = {"$text": {"$search": name}}
-    result: list[Lookbook] = lookbooks_collection.find(query).limit(15)
-    return result
+    if cursor:
+        query["_id"] = {"$gt": ObjectId(cursor)}
+    matching_lookbooks = lookbooks_collection.find(query).sort("_id", 1).limit(limit)
+    lookbook_list = []
+    for doc in matching_lookbooks:
+        # Convert ObjectId to string
+        doc["_id"] = str(doc["_id"])
+        lookbook_list.append(Lookbook(**doc))
+    return lookbook_list
