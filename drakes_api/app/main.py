@@ -42,9 +42,13 @@ def get_lookbooks_any(tags: list[str] = Query(default=None),
     print(f"Searching for {tags} in lookbooks db...")
     lookbooks = crud.retrieve_lookbook_by_tag(tags=tags, cursor=cursor, limit=limit)
     print(f"{lookbooks=}")
+    # Handle empty results
+    next_cursor = None
+    if lookbooks:  # Only set cursor if we have results
+        next_cursor = lookbooks[-1].id  # The id of the last lb we got
     lb_response = LookbookResponse(
         lookbooks_list=lookbooks,
-        next_cursor=lookbooks[-1].id,  # The id of the last lb we got
+        next_cursor=next_cursor,
         has_more=len(lookbooks) == limit  # If we reached limit there might be more
     )
     return lb_response
