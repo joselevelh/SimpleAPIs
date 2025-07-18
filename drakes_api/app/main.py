@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Query
 from starlette.middleware.cors import CORSMiddleware
 
-from app.models import Lookbook
+from app.models import Lookbook, LookbookResponse
 from app import crud
 
 app = FastAPI(title="Unofficial Drakes Lookbook API",
@@ -35,9 +35,16 @@ def get_lookbook(title: str) -> list[Lookbook]:
 
 
 @app.get("/lookbooks/any/")
-def get_lookbooks_any(tags: list[str] = Query(default=None)) -> list[Lookbook]:
+def get_lookbooks_any(tags: list[str] = Query(default=None),
+                      limit: int = 5,
+                      cursor=None) -> LookbookResponse:
     """Returns all lookbooks that have the given tag(s)"""
     print(f"Searching for {tags} in lookbooks db...")
-    lookbooks = crud.retrieve_lookbook_by_tag(tags=tags)
+    lookbooks = crud.retrieve_lookbook_by_tag(tags=tags, cursor=cursor, limit=limit)
     print(f"{lookbooks=}")
-    return lookbooks
+    lb_response = LookbookResponse(
+        lookbooks_list=lookbooks,
+        next_cursor=lookbooks[-1].id,  # The id of the last lb we got
+        has_more=len(lookbooks) == limit  # If we reached limit there might be more
+    )
+    return lb_response
