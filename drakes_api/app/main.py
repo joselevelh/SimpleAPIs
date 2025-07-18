@@ -40,7 +40,7 @@ def get_lookbooks_any(tags: list[str] = Query(default=None),
                       cursor=None) -> LookbookResponse:
     """Returns all lookbooks that have the given tag(s)"""
     print(f"Searching for {tags} in lookbooks db...")
-    lookbooks = list(crud.retrieve_lookbook_by_tag(tags=tags, cursor=cursor, limit=limit))
+    lookbooks = crud.retrieve_lookbook_by_tag(tags=tags, cursor=cursor, limit=limit)
     print(f"{lookbooks=}")
     lb_response = LookbookResponse(
         lookbooks_list=lookbooks,
