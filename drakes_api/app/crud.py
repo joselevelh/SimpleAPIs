@@ -30,8 +30,8 @@ def check_db_connection():
 def retrieve_lookbook_by_tag(tags: list[str], cursor=None, limit: int = 5) -> list[Lookbook]:
     query = {"tags": {"$in": tags}}  # $in does partial matching in mongo array
     if cursor:
-        query["_id"] = {"$gt": ObjectId(cursor)}
-    matching_lookbooks = lookbooks_collection.find(query).sort("_id", 1).limit(limit)
+        query["_id"] = {"$lt": ObjectId(cursor)}
+    matching_lookbooks = lookbooks_collection.find(query).sort("_id", -1).limit(limit)
     lookbook_list = []
     for doc in matching_lookbooks:
         # Convert ObjectId to string
@@ -43,8 +43,8 @@ def retrieve_lookbook_by_tag(tags: list[str], cursor=None, limit: int = 5) -> li
 def retrieve_lookbook_by_name(name: str, cursor=None, limit: int = 5) -> list[Lookbook]:
     query = {"$text": {"$search": name}}
     if cursor:
-        query["_id"] = {"$gt": ObjectId(cursor)}
-    matching_lookbooks = lookbooks_collection.find(query).sort("_id", 1).limit(limit)
+        query["_id"] = {"$lt": ObjectId(cursor)}
+    matching_lookbooks = lookbooks_collection.find(query).sort("_id", -1).limit(limit)
     lookbook_list = []
     for doc in matching_lookbooks:
         # Convert ObjectId to string
