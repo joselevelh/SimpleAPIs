@@ -41,7 +41,7 @@ def retrieve_lookbook_by_tag(tags: list[str], cursor=None, limit: int = 5) -> li
 
 
 def retrieve_untagged_lookbooks(cursor=None, limit: int = 5) -> list[Lookbook]:
-    query = {"tags": ""}  # Only matches lookbooks with no tags
+    query = {"tags": []}  # Only matches lookbooks with no tags
     if cursor:
         query["_id"] = {"$lt": ObjectId(cursor)}
     matching_lookbooks = lookbooks_collection.find(query).sort("_id", -1).limit(limit)
