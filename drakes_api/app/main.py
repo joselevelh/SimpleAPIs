@@ -31,7 +31,7 @@ def get_lookbook(title: str,
                  limit: int = 5,
                  cursor=None) -> LookbookResponse:
     print(f"Searching for {title} in lookbooks db...")
-    lookbooks = crud.retrieve_lookbook_by_name(name=title, cursor=cursor, limit=limit )
+    lookbooks = crud.retrieve_lookbook_by_name(name=title, cursor=cursor, limit=limit)
     print(f"{lookbooks=}")
     # Handle empty results
     next_cursor = ""
@@ -52,6 +52,25 @@ def get_lookbooks_any(tags: list[str] = Query(default=None),
     """Returns all lookbooks that have the given tag(s)"""
     print(f"Searching for {tags} in lookbooks db...")
     lookbooks = crud.retrieve_lookbook_by_tag(tags=tags, cursor=cursor, limit=limit)
+    print(f"{lookbooks=}")
+    # Handle empty results
+    next_cursor = ""
+    if lookbooks:  # Only set cursor if we have results
+        next_cursor = lookbooks[-1].id  # The id of the last lb we got
+    lb_response = LookbookResponse(
+        lookbooks_list=lookbooks,
+        next_cursor=next_cursor,
+        has_more=len(lookbooks) == limit  # If we reached limit there might be more
+    )
+    return lb_response
+
+
+@app.get("/lookbooks/untagged/")
+def get_untagged_lookbooks(limit: int = 5,
+                           cursor=None) -> LookbookResponse:
+    """Returns all untagged lookbooks"""
+    print(f"Searching for untagged lookbooks db...")
+    lookbooks = crud.retrieve_untagged_lookbooks(cursor=cursor, limit=limit)
     print(f"{lookbooks=}")
     # Handle empty results
     next_cursor = ""
