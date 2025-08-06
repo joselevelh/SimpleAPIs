@@ -27,7 +27,7 @@ def check_db_connection():
     return check == 4
 
 
-def retrieve_lookbook_by_tag(tags: list[str], cursor=None, limit: int = 5) -> list[Lookbook]:
+def retrieve_lookbook_by_tag(tags: list[str], cursor=None, limit: int = 2) -> list[Lookbook]:
     query = {"tags": {"$in": tags}}  # $in does partial matching in mongo array
     if cursor:
         query["_id"] = {"$lt": ObjectId(cursor)}
@@ -40,7 +40,7 @@ def retrieve_lookbook_by_tag(tags: list[str], cursor=None, limit: int = 5) -> li
     return lookbook_list
 
 
-def retrieve_untagged_lookbooks(cursor=None, limit: int = 5) -> list[Lookbook]:
+def retrieve_untagged_lookbooks(cursor=None, limit: int = 2) -> list[Lookbook]:
     query = {"tags": []}  # Only matches lookbooks with no tags
     if cursor:
         query["_id"] = {"$lt": ObjectId(cursor)}
@@ -53,7 +53,7 @@ def retrieve_untagged_lookbooks(cursor=None, limit: int = 5) -> list[Lookbook]:
     return lookbook_list
 
 
-def retrieve_lookbook_by_name(name: str, cursor=None, limit: int = 5) -> list[Lookbook]:
+def retrieve_lookbook_by_name(name: str, cursor=None, limit: int = 2) -> list[Lookbook]:
     query = {"$text": {"$search": name}}
     if cursor:
         query["_id"] = {"$lt": ObjectId(cursor)}

@@ -28,7 +28,7 @@ def system_check():
 
 @app.get("/lookbooks/{title}")
 def get_lookbook(title: str,
-                 limit: int = 5,
+                 limit: int = 2,
                  cursor=None) -> LookbookResponse:
     print(f"Searching for {title} in lookbooks db...")
     lookbooks = crud.retrieve_lookbook_by_name(name=title, cursor=cursor, limit=limit)
@@ -47,7 +47,7 @@ def get_lookbook(title: str,
 
 @app.get("/lookbooks/any/")
 def get_lookbooks_any(tags: list[str] = Query(default=None),
-                      limit: int = 5,
+                      limit: int = 2,
                       cursor=None) -> LookbookResponse:
     """Returns all lookbooks that have the given tag(s)"""
     print(f"Searching for {tags} in lookbooks db...")
@@ -66,7 +66,7 @@ def get_lookbooks_any(tags: list[str] = Query(default=None),
 
 
 @app.get("/lookbooks/untagged/")
-def get_untagged_lookbooks(limit: int = 5,
+def get_untagged_lookbooks(limit: int = 2,
                            cursor=None) -> LookbookResponse:
     """Returns all untagged lookbooks"""
     print(f"Searching for untagged lookbooks db...")
