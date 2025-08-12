@@ -12,7 +12,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://localhost:5173/",
-        "https://yourdomain.com",  # Todo: Change this to my front-end domain
+        "https://bionic-freehold-415417.web.app",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
