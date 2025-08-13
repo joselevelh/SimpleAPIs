@@ -13,6 +13,7 @@ app.add_middleware(
         "http://localhost:5173",
         "http://localhost:5173/",
         "https://bionic-freehold-415417.web.app",
+        "https://the-lilas.com/",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
